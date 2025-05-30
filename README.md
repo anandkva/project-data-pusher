@@ -36,7 +36,7 @@ npm start
 Visit Swagger UI at:
 
 ```
-http://localhost:3000/api-docs
+https://project-data-pusher.onrender.com/api-docs
 ```
 
 ---
