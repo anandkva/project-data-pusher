@@ -1,0 +1,257 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Data Pusher API",
+    "description": "OpenAPI documentation for Data Pusher NodeJS assessment APIs",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "tags": [
+    { "name": "Account", "description": "Account management routes" },
+    {
+      "name": "Destination",
+      "description": "Destination configuration routes"
+    },
+    {
+      "name": "DataRoute",
+      "description": "Routes for sending data to destinations"
+    }
+  ],
+  "paths": {
+    "/accounts": {
+      "post": {
+        "tags": ["Account"],
+        "summary": "Create Account",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "accountName": { "type": "string" },
+                  "website": { "type": "string" }
+                },
+                "required": ["email", "accountName", "website"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account created"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Account"],
+        "summary": "Get All Accounts",
+        "responses": {
+          "200": {
+            "description": "List of accounts"
+          }
+        }
+      }
+    },
+    "/accounts/{id}": {
+      "get": {
+        "tags": ["Account"],
+        "summary": "Get Account by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Account details" }
+        }
+      },
+      "put": {
+        "tags": ["Account"],
+        "summary": "Update Account",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accountName": { "type": "string" },
+                  "website": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Account updated" }
+        }
+      },
+      "delete": {
+        "tags": ["Account"],
+        "summary": "Delete Account",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Account deleted" }
+        }
+      }
+    },
+    "/destinations": {
+      "post": {
+        "tags": ["Destination"],
+        "summary": "Create Destination",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accountId": { "type": "string" },
+                  "url": { "type": "string" },
+                  "httpMethod": { "type": "string" },
+                  "headers": {
+                    "type": "object",
+                    "additionalProperties": { "type": "string" }
+                  }
+                },
+                "required": ["accountId", "url", "httpMethod"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Destination created" }
+        }
+      },
+      "get": {
+        "tags": ["Destination"],
+        "summary": "Get All Destinations",
+        "responses": {
+          "200": { "description": "List of destinations" }
+        }
+      }
+    },
+    "/destinations/account/{id}": {
+      "get": {
+        "tags": ["Destination"],
+        "summary": "Get Destinations by Account ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "List of destinations" }
+        }
+      }
+    },
+    "/destinations/{id}": {
+      "put": {
+        "tags": ["Destination"],
+        "summary": "Update Destination",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": { "type": "string" },
+                  "httpMethod": { "type": "string" },
+                  "headers": {
+                    "type": "object",
+                    "additionalProperties": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Destination updated" }
+        }
+      },
+      "delete": {
+        "tags": ["Destination"],
+        "summary": "Delete Destination",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Destination deleted" }
+        }
+      }
+    },
+    "/server/incoming_data": {
+      "post": {
+        "tags": ["DataRoute"],
+        "summary": "Send Incoming Data",
+        "parameters": [
+          {
+            "name": "CL-X-TOKEN",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "user": "Anand",
+                  "action": "update"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Data sent" }
+        }
+      }
+    }
+  }
+}
