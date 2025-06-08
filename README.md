@@ -102,7 +102,3 @@ This project is open-source and available under the [MIT License](https://openso
 ## 🤝 Contributing
 
 Feel free to fork and create pull requests. Feedback and improvements are welcome!
-
-```javascript
-Let me know if you need a "LICENSE" file or Postman collection for this API.
-```
